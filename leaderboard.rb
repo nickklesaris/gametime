@@ -3,8 +3,7 @@ require 'CSV'
 require 'sinatra'
 
 get '/' do
-  "Change the above url to /leaderboard to see the NFL leaderboard.
- For example: http://localhost:4567/leaderboard"
+  redirect '/'
 end
 
 
