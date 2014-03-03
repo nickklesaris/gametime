@@ -70,6 +70,17 @@ def compile_and_sort (wins_losses, iterations)
   @leaderboard
 end
 
+@teams = []
+
+# Initialize `@teams` array with scores of 0 for each team
+score_data.each do |game_results|
+  home_team = { name: game_results[:home_team], wins: 0, losses: 0 }
+  away_team = { name: game_results[:away_team], wins: 0, losses: 0 }
+
+  @teams << home_team
+  @teams << away_team
+end
+
 score_data.each_with_index do |game_results, count|
   if game_results[:home_score] > game_results[:away_score]
     wins_losses << ["team" => game_results[:home_team], "wins" => 1, "losses" => 0]
