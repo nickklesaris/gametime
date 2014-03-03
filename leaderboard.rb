@@ -96,6 +96,10 @@ score_data.each do |game_results|
   loser[:losses] += 1
 end
 
+@teams.sort_by! do |team|
+  [-team[:wins], team[:losses]]
+end
+
 iterations = wins_losses.length
 #add ending row
 wins_losses << ["team" => "end", "wins" => 0, "losses" => 0]
