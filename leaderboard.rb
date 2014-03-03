@@ -1,8 +1,6 @@
 #requirements
 require 'CSV'
 require 'sinatra'
-require 'shotgun'
-set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/' do
   "Change the above url to /leaderboard to see the NFL leaderboard.
