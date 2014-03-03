@@ -5,7 +5,7 @@ require 'shotgun'
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/' do
-"Change the above url to /leaderboard to see the NFL leaderboard.
+  "Change the above url to /leaderboard to see the NFL leaderboard.
  For example: http://localhost:4567/leaderboard"
 end
 
@@ -56,21 +56,21 @@ def compile_and_sort (wins_losses, iterations)
 
   until sorted[count][0]["team"] == "end" do
     if sorted[count][0]["team"] == current_team
-          current_wins += sorted[count][0]["wins"]
-          current_losses += sorted[count][0]["losses"]
-          count += 1
+      current_wins += sorted[count][0]["wins"]
+      current_losses += sorted[count][0]["losses"]
+      count += 1
     else
-          @leaderboard << [current_team, current_wins, current_losses]
-          count += 1
-          current_team = sorted[count][0]["team"]
-          current_wins = sorted[count][0]["wins"]
-          current_losses = sorted[count][0]["losses"]
-          if count >= iterations && sorted[count][0]["team"] == "end"
-            @leaderboard << [sorted[iterations][0]["team"], sorted[iterations][0]["wins"], sorted[iterations][0]["losses"]]
-          end
+      @leaderboard << [current_team, current_wins, current_losses]
+      count += 1
+      current_team = sorted[count][0]["team"]
+      current_wins = sorted[count][0]["wins"]
+      current_losses = sorted[count][0]["losses"]
+      if count >= iterations && sorted[count][0]["team"] == "end"
+        @leaderboard << [sorted[iterations][0]["team"], sorted[iterations][0]["wins"], sorted[iterations][0]["losses"]]
+      end
     end
   end
-@leaderboard
+  @leaderboard
 end
 
 score_data.each_with_index do |game_results, count|
@@ -80,7 +80,7 @@ score_data.each_with_index do |game_results, count|
   else
     wins_losses << ["team" => game_results[:away_team], "wins" => 1, "losses" => 0]
     wins_losses << ["team" => game_results[:home_team], "wins" => 0, "losses" => 1]
-end
+  end
 end
 
 iterations = wins_losses.length
@@ -92,7 +92,7 @@ wins_losses << ["team" => "end", "wins" => 0, "losses" => 0]
 sorted0 = @leaderboard.sort{ |a, b | b[2]<=>a[2]}
 
 get '/leaderboard' do
-@leaderboard  = sorted0.sort{ |a, b | b[1]<=>a[1]}
-erb:index
+  @leaderboard  = sorted0.sort{ |a, b | b[1]<=>a[1]}
+  erb:index
 end
 #print @leaderboard
