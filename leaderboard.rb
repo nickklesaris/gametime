@@ -61,7 +61,7 @@ end
 
 
 get '/' do
-  redirect '/'
+  redirect '/leaderboard'
 end
 
 get '/leaderboard' do
