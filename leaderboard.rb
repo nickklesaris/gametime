@@ -81,6 +81,7 @@ score_data.each do |game_results|
   @teams << away_team
 end
 
+@teams.uniq!
 score_data.each_with_index do |game_results, count|
   if game_results[:home_score] > game_results[:away_score]
     wins_losses << ["team" => game_results[:home_team], "wins" => 1, "losses" => 0]
