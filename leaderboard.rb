@@ -2,15 +2,6 @@
 require 'CSV'
 require 'sinatra'
 
-get '/' do
-  redirect '/'
-end
-
-
-#initiate variables
-wins_losses = []
-@leaderboard = []
-
 score_data = [
   {
     home_team: "Patriots",
@@ -37,38 +28,6 @@ score_data = [
     away_score: 21
   }
 ]
-
-#methods
-def compile_and_sort (wins_losses, iterations)
-  count = 1
-  iterations = iterations -1
-  @leaderboard = []
-
-  sorted0 = wins_losses.sort{ |a, b | a[0]['wins']<=>b[0]['wins']}
-  sorted = sorted0.sort{ |a, b | a[0]['team']<=>b[0]['team']}
-
-  current_team = sorted[0][0]["team"]
-  current_wins = sorted[0][0]["wins"]
-  current_losses = sorted[0][0]["losses"]
-
-  until sorted[count][0]["team"] == "end" do
-    if sorted[count][0]["team"] == current_team
-      current_wins += sorted[count][0]["wins"]
-      current_losses += sorted[count][0]["losses"]
-      count += 1
-    else
-      @leaderboard << [current_team, current_wins, current_losses]
-      count += 1
-      current_team = sorted[count][0]["team"]
-      current_wins = sorted[count][0]["wins"]
-      current_losses = sorted[count][0]["losses"]
-      if count >= iterations && sorted[count][0]["team"] == "end"
-        @leaderboard << [sorted[iterations][0]["team"], sorted[iterations][0]["wins"], sorted[iterations][0]["losses"]]
-      end
-    end
-  end
-  @leaderboard
-end
 
 @teams = []
 
@@ -100,16 +59,11 @@ end
   [-team[:wins], team[:losses]]
 end
 
-iterations = wins_losses.length
-#add ending row
-wins_losses << ["team" => "end", "wins" => 0, "losses" => 0]
-# send data to method for consolidatiion
-@leaderboard = compile_and_sort(wins_losses, iterations)
-#sort data
-sorted0 = @leaderboard.sort{ |a, b | b[2]<=>a[2]}
+
+get '/' do
+  redirect '/'
+end
 
 get '/leaderboard' do
-  @leaderboard  = sorted0.sort{ |a, b | b[1]<=>a[1]}
   erb:index
 end
-#print @leaderboard
