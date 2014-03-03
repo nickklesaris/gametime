@@ -9,11 +9,15 @@
     <h1>NFL Leaderboard</h1>
 
     <table border="1" style="width:300px">
-      <% @leaderboard.each do |team| %>
-        <th>team</th><th>wins</th><th>losses</th>
-        <tr><td><%= team[0] %></td>
-            <td><%= team[1] %></td>
-            <td><%= team[2] %></td></tr>
+      <th>Team Name</th>
+      <th>Wins</th>
+      <th>Losses</th>
+      <% @teams.each do |team| %>
+        <tr>
+          <td><%= team[:name] %></td>
+          <td><%= team[:wins] %></td>
+          <td><%= team[:losses] %></td>
+        </tr>
       <% end %>
     </table>
   </body>
