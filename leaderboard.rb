@@ -82,14 +82,18 @@ score_data.each do |game_results|
 end
 
 @teams.uniq!
-score_data.each_with_index do |game_results, count|
+
+score_data.each do |game_results|
   if game_results[:home_score] > game_results[:away_score]
-    wins_losses << ["team" => game_results[:home_team], "wins" => 1, "losses" => 0]
-    wins_losses << ["team" => game_results[:away_team], "wins" => 0, "losses" => 1]
+    winner = @teams.find { |team| team[:name] == game_results[:home_team] }
+    loser = @teams.find { |team| team[:name] == game_results[:away_team] }
   else
-    wins_losses << ["team" => game_results[:away_team], "wins" => 1, "losses" => 0]
-    wins_losses << ["team" => game_results[:home_team], "wins" => 0, "losses" => 1]
+    winner = @teams.find { |team| team[:name] == game_results[:away_team] }
+    loser = @teams.find { |team| team[:name] == game_results[:home_team] }
   end
+
+  winner[:wins] += 1
+  loser[:losses] += 1
 end
 
 iterations = wins_losses.length
